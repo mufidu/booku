@@ -39,6 +39,15 @@ app.get('/', (req, res) => {
 app.get('/books', async (req, res) => {
     const books = await Book.find({});
     res.json(books);
+    // Get books by category
+    app.get('/books/category/:category', async (req, res) => {
+        const category = req.params.category;
+        const books = await Book.find({ category: category });
+        if (!books.length) {
+            return res.status(404).json({ message: 'No books found for the requested category' });
+        }
+        res.json(books);
+    });
 });
 
 // Create a new book
