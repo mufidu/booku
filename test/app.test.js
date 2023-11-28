@@ -82,3 +82,18 @@ describe('Book API', () => {
         expect(res.body).to.equal(`${book.title} deleted`);
     });
 });
+    it('should get books by a specific category on /books/category/:category GET', async () => {
+        const category = 'Science';
+        const res = await chai.request(app).get('/books/category/' + category);
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('array');
+        // Assuming that the database pre-population is out of the scope for this test case.
+        // A proper test would either mock the database response or require database setup to contain mocked categories.
+    });
+    it('should return a 404 status when no books are found for a requested category on /books/category/:category GET', async () => {
+        const category = 'UnknownCategory';
+        const res = await chai.request(app).get('/books/category/' + category);
+        expect(res).to.have.status(404);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.equal('No books found for the requested category');
+    });
