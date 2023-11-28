@@ -82,6 +82,39 @@ app.delete('/books/:id', async (req, res) => {
     res.json(`${bookTitle} deleted`);
 });
 
+// Update a book by id
+app.put('/books/:id', async (req, res) => {
+    const { id } = req.params;
+// Get books by category
+app.get('/books/category/:categoryName', async (req, res) => {
+    const { categoryName } = req.params;
+    const books = await Book.find({ category: categoryName });
+
+    if (books.length === 0) {
+        return res.status(404).send("No books found for the category");
+    }
+
+    res.json(books);
+});
+    const { title, author, year, category, cover } = req.body;
+
+    const book = await Book.findByIdAndUpdate(id, { title, author, year, category, cover }, { new: true });
+
+    if (!book) {
+        return res.status(404).send("Book not found");
+    }
+
+    res.json(book);
+});
+
+// Delete a book by id
+app.delete('/books/:id', async (req, res) => {
+    const book = await Book.findByIdAndDelete(req.params.id);
+    const bookTitle = book.title;
+
+    res.json(`${bookTitle} deleted`);
+});
+
 const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
