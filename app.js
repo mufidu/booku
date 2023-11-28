@@ -16,7 +16,21 @@ dbUrl = process.env.MONGODB_URI || 'mongodb://localhost:27017/booku';
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-});
+});    // Get books by category
+    app.get('/books/category/:category', (req, res) => {
+        const { category } = req.params;
+        if (!categories.includes(category)) {
+            return res.status(400).send({ message: 'Invalid category' });
+        }
+        Book.find({ category })
+            .then(books => {
+                res.json(books);
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: 'An error occurred while retrieving the books' });
+            });
+    });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -61,6 +75,21 @@ app.get('/books/:id', async (req, res) => {
 });
 
 // Update a book by id
+    // Get books by category
+    app.get('/books/category/:category', (req, res) => {
+        const { category } = req.params;
+        if (!categories.includes(category)) {
+            return res.status(400).send({ message: 'Invalid category' });
+        }
+        Book.find({ category })
+            .then(books => {
+                res.json(books);
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: 'An error occurred while retrieving the books' });
+            });
+    });
 app.put('/books/:id', async (req, res) => {
     const { id } = req.params;
     const { title, author, year, category, cover } = req.body;
