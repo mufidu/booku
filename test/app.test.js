@@ -17,7 +17,8 @@ describe('Book API', () => {
     it('should get all books on /books GET', async () => {
         const res = await chai.request(app).get('/books');
         expect(res).to.have.status(200);
-        expect(res.body).to.be.a('array');
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('title').eql(book.title);
     });
 
     // Test for POST route "/books"
@@ -73,6 +74,8 @@ describe('Book API', () => {
             title: 'Test Book',
             author: 'Test Author',
             year: 2022,
+expect(res.body).to.be.a('object');
+expect(res.body).to.have.property('title').eql(book.title);
             category: 'Science',
             cover: 'Test Cover'
         });
