@@ -80,5 +80,16 @@ describe('Book API', () => {
         const res = await chai.request(app).delete(`/books/${book.id}`);
         expect(res).to.have.status(200);
         expect(res.body).to.equal(`${book.title} deleted`);
+it('should get books filtered by category on /books/category/:categoryName GET', async () => {
+        const resWithBooks = await chai.request(app).get('/books/category/Science');
+        expect(resWithBooks).to.have.status(200);
+        expect(resWithBooks.body).to.be.a('array');
+        resWithBooks.body.forEach(book => {
+            expect(book).to.have.property('category').that.equals('Science');
+        });
+        const resNoBooks = await chai.request(app).get('/books/category/NonExistingCategory');
+        expect(resNoBooks).to.have.status(404);
+        expect(resNoBooks.text).to.equal('No books found for the category');
+    });
     });
 });
