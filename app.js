@@ -34,15 +34,13 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+// Get all books
 app.get('/books', async (req, res) => {
     const books = await Book.find({});
     res.json(books);
 });
 
-app.get('/books/new', async (req, res) => {
-    res.json(categories);
-});
-
+// Create a new book
 app.post('/books', async (req, res) => {
     let { title, author, year, category, cover } = req.body;
     const book = new Book({ title, author, year, category, cover });
@@ -50,24 +48,32 @@ app.post('/books', async (req, res) => {
     res.json(book);
 });
 
+// Get a book by id
 app.get('/books/:id', async (req, res) => {
     const book = await Book.findById(req.params.id);
     res.json(book);
 });
 
-app.get('/books/:id/edit', async (req, res) => {
-    const book = await Book.findById(req.params.id);
+// Update a book by id
+app.put('/books/:id', async (req, res) => {
+    const { id } = req.params;
+    const { title, author, year, category, cover } = req.body;
+
+    const book = await Book.findByIdAndUpdate(id, { title, author, year, category, cover });
+
+    if (!book) {
+        return res.status(404).send("Book not found");
+    }
+
     res.json(book);
 });
 
-app.put('/books/:id', async (req, res) => {
-    let { title, author, year, category, cover } = req.body;
-    await Book.findByIdAndUpdate(req.params.id, { title, author, year, category, cover });
-    res.json(await Book.findById(req.params.id));
-});
-
+// Delete a book by id
 app.delete('/books/:id', async (req, res) => {
-    res.json(await Book.findByIdAndDelete(req.params.id));
+    const book = await Book.findByIdAndDelete(req.params.id);
+    const bookTitle = book.title;
+
+    res.json(`${bookTitle} deleted`);
 });
 
 const port = process.env.PORT || 8080;
