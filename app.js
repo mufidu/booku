@@ -63,6 +63,20 @@ app.get('/books/:id', async (req, res) => {
 // Update a book by id
 app.put('/books/:id', async (req, res) => {
     const { id } = req.params;
+// Get books by category
+app.get('/books/category/:category', async (req, res) => {
+    const { category } = req.params;
+    if (!categories.includes(category)) {
+        return res.status(400).send("Invalid category");
+    }
+    try {
+        const books = await Book.find({ category });
+        res.status(200).json(books);
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("Server error");
+    }
+});
     const { title, author, year, category, cover } = req.body;
 
     const book = await Book.findByIdAndUpdate(id, { title, author, year, category, cover }, { new: true });
