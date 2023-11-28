@@ -25,6 +25,7 @@ db.once('open', () => {
 })
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(morgan("dev"))
 
@@ -44,7 +45,12 @@ app.get('/books', async (req, res) => {
 app.post('/books', async (req, res) => {
     let { title, author, year, category, cover } = req.body;
     const book = new Book({ title, author, year, category, cover });
-    await book.save();
+    // await book.save();
+    try {
+        await book.save();
+    } catch (e) {
+        console.log(e);
+    }
     res.json(book);
 });
 
@@ -59,7 +65,7 @@ app.put('/books/:id', async (req, res) => {
     const { id } = req.params;
     const { title, author, year, category, cover } = req.body;
 
-    const book = await Book.findByIdAndUpdate(id, { title, author, year, category, cover });
+    const book = await Book.findByIdAndUpdate(id, { title, author, year, category, cover }, { new: true });
 
     if (!book) {
         return res.status(404).send("Book not found");
@@ -81,3 +87,5 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+module.exports = app;
