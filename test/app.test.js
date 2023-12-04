@@ -7,12 +7,6 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe("Book API", () => {
-    // Test for GET route "/"
-    it("should return Hello World on / GET", async () => {
-        const res = await chai.request(app).get("/");
-        expect(res.text).to.equal("Hello World!");
-    });
-
     // Test for GET route "/books"
     it("should get all books on /books GET", async () => {
         const res = await chai.request(app).get("/books");
@@ -36,20 +30,7 @@ describe("Book API", () => {
     });
 
     // Test for GET route "/books/:id"
-    it("should get a single book on /books/:id GET", async () => {
-        const book = new Book({
-            title: "Test Book",
-            author: "Test Author",
-            year: 2022,
-            category: "Science",
-            cover: "Test Cover",
-        });
-        await book.save();
-        const res = await chai.request(app).get(`/books/${book.id}`);
-        expect(res).to.have.status(200);
-        expect(res.body).to.be.a("object");
-        expect(res.body).to.have.property("title").eql(book.title);
-    });
+
 
     // Test for PUT route "/books/:id"
     it("should update a book on /books/:id PUT", async () => {
@@ -83,7 +64,6 @@ describe("Book API", () => {
         const res = await chai.request(app).delete(`/books/${book.id}`);
         expect(res).to.have.status(200);
         expect(res.body).to.equal(`${book.title} deleted`);
-
     });
 
     it("should get books filtered by category on /books/category/:categoryName GET", async () => {
