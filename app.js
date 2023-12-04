@@ -9,20 +9,9 @@ const methodOverride = require("method-override");
 const Book = require("./models/book");
 const morgan = require("morgan");
 
-const mongoose = require("mongoose");
+const connectToDb = require('./db');
 
-dbUrl = process.env.MONGODB_URI || "mongodb://localhost:27017/booku";
-
-mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
-
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Database connected!");
-});
+connectToDb();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
