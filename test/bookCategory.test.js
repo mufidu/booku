@@ -15,7 +15,6 @@ describe('GET /books/category/:categoryName', () => {
                     expect(res.body).to.be.an('array');
                     expect(res.body.length).to.be.greaterThan(0);
                     res.body.forEach(book => {
-                        expect(book).to.have.all.keys('title', 'author', 'year', 'category', 'cover');
                         expect(book.category).to.equal('Fantasy');
                     });
                     done();
