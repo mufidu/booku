@@ -75,6 +75,9 @@ app.delete("/books/:id", async (req, res) => {
 // Get books by category
 app.get("/books/category/:categoryName", async (req, res) => {
     const { categoryName } = req.params;
+    if (!categories.includes(categoryName)) {
+        return res.status(404).send("Invalid category");
+    }
     const books = await Book.find({ category: categoryName });
 
     if (books.length === 0) {
