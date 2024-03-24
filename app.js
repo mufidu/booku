@@ -87,13 +87,7 @@ app.get("/books/category/:categoryName", async (req, res) => {
     res.json(books);
 });
 
-// Delete a book by id
-app.delete("/books/:id", async (req, res) => {
-    const book = await Book.findByIdAndDelete(req.params.id);
-    const bookTitle = book.title;
 
-    res.json(`${bookTitle} deleted`);
-});
 
 const port = process.env.PORT || 8080;
 
