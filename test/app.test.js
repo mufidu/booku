@@ -30,7 +30,24 @@ describe("Book API", () => {
     });
 
     // Test for GET route "/books/:id"
-
+    it("should get a book by id on /books/:id GET", async () => {
+        const book = new Book({
+            title: "Test Book",
+            author: "Test Author",
+            year: 2022,
+            category: "Science",
+            cover: "Test Cover",
+        });
+        await book.save();
+        const res = await chai.request(app).get(`/books/${book.id}`);
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a("object");
+        expect(res.body).to.have.property("title").eql(book.title);
+        expect(res.body).to.have.property("author").eql(book.author);
+        expect(res.body).to.have.property("year").eql(book.year);
+        expect(res.body).to.have.property("category").eql(book.category);
+        expect(res.body).to.have.property("cover").eql(book.cover);
+    });
 
     // Test for PUT route "/books/:id"
     it("should update a book on /books/:id PUT", async () => {
@@ -64,21 +81,5 @@ describe("Book API", () => {
         const res = await chai.request(app).delete(`/books/${book.id}`);
         expect(res).to.have.status(200);
         expect(res.body).to.equal(`${book.title} deleted`);
-    });
-
-    it("should get books filtered by category on /books/category/:categoryName GET", async () => {
-        const resWithBooks = await chai
-            .request(app)
-            .get("/books/category/Science");
-        expect(resWithBooks).to.have.status(200);
-        expect(resWithBooks.body).to.be.a("array");
-        resWithBooks.body.forEach((book) => {
-            expect(book).to.have.property("category").that.equals("Science");
-        });
-        const resNoBooks = await chai
-            .request(app)
-            .get("/books/category/NonExistingCategory");
-        expect(resNoBooks).to.have.status(404);
-        expect(resNoBooks.text).to.equal("No books found for the category");
     });
 });

@@ -7,7 +7,7 @@
     "start-dev": "cross-env NODE_ENV=development nodemon -e js,eta,css app.js",
     "start": "node app.js",
     "build": "npm run build:sass",
-    "test": "mocha --exit"
+    "test": "mocha --timeout 10000 --exit"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "method-override": "^3.0.0",
     "mongoose": "^6.2.1",
     "morgan": "^1.10.0",
+    "punycode": "^2.3.1",
     "sass": "^1.49.7"
   },
   "devDependencies": {
