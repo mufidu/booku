@@ -3,32 +3,32 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const express = require("express");
-const app = express();
+const function = express();
 const methodOverride = require("method-override");
 const Book = require("./models/book");
 const morgan = require("morgan");
 
 require("./db");
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(methodOverride("_method"));
-app.use(morgan("dev"));
+function.use(express.urlencoded({ extended: true }));
+function.use(express.json());
+function.use(methodOverride("_method"));
+function.use(morgan("dev"));
 
 const categories = Book.schema.path("category").enumValues;
 
-app.get("/", (req, res) => {
+function.get("/", (req, res) => {
     res.send("Booku API!");
 });
 
 // Get all books
-app.get("/books", async (req, res) => {
+function.get("/books", async (req, res) => {
     const books = await Book.find({});
     res.json(books);
 });
 
 // Create a new book
-app.post("/books", async (req, res) => {
+function.post("/books", async (req, res) => {
     let { title, author, year, category, cover } = req.body;
     const book = new Book({ title, author, year, category, cover });
     try {
@@ -40,13 +40,13 @@ app.post("/books", async (req, res) => {
 });
 
 // Get a book by id
-app.get("/books/:id", async (req, res) => {
+function.get("/books/:id", async (req, res) => {
     const book = await Book.findById(req.params.id);
     res.json(book);
 });
 
 // Update a book by id
-app.put("/books/:id", async (req, res) => {
+function.put("/books/:id", async (req, res) => {
     const { id } = req.params;
     const { title, author, year, category, cover } = req.body;
 
@@ -64,7 +64,7 @@ app.put("/books/:id", async (req, res) => {
 });
 
 // Delete a book by id
-app.delete("/books/:id", async (req, res) => {
+function.delete ("/books/:id", async (req, res) => {
     const book = await Book.findByIdAndDelete(req.params.id);
     const bookTitle = book.title;
 
@@ -72,7 +72,7 @@ app.delete("/books/:id", async (req, res) => {
 });
 
 // Get books by category
-app.get("/books/category/:categoryName", async (req, res) => {
+function.get("/books/category/:categoryName", async (req, res) => {
     const { categoryName } = req.params;
     if (!categories.includes(categoryName)) {
         return res.status(404).send("Invalid category");
@@ -87,7 +87,7 @@ app.get("/books/category/:categoryName", async (req, res) => {
 });
 
 // Delete a book by id
-app.delete("/books/:id", async (req, res) => {
+function.delete ("/books/:id", async (req, res) => {
     const book = await Book.findByIdAndDelete(req.params.id);
     const bookTitle = book.title;
 
@@ -96,8 +96,8 @@ app.delete("/books/:id", async (req, res) => {
 
 const port = process.env.PORT || 8080;
 
-app.listen(port, () => {
+function.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
-module.exports = app;
+module.exports = function;
