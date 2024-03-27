@@ -52,6 +52,9 @@ app.post("/books", async (req, res) => {
 // Get a book by id
 app.get("/books/:id", async (req, res) => {
     const book = await Book.findById(req.params.id);
+    if (!book) {
+        return res.status(404).json({ message: 'Book not found' });
+    }
     console.log(book.title);
     res.json(book);
 });
