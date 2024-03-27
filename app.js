@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 app.get("/books", async (req, res) => {
     const books = await Book.find({});
     res.json(books);
-});
+);
 
 // Create a new book
 app.post("/books", async (req, res) => {
@@ -64,7 +64,7 @@ app.put("/books/:id", async (req, res) => {
 });
 
 // Delete a book by id
-app.delete ("/books/:id", async (req, res) => {
+app.delete("/books/:id", async (req, res) => {
     const book = await Book.findByIdAndDelete(req.params.id);
     const bookTitle = book.title;
 
@@ -87,7 +87,7 @@ app.get("/books/category/:categoryName", async (req, res) => {
 });
 
 // Delete a book by id
-app.delete ("/books/:id", async (req, res) => {
+app.delete("/books/:id", async (req, res) => {
     const book = await Book.findByIdAndDelete(req.params.id);
     const bookTitle = book.title;
 
