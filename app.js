@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 // Get all books
 app.get("/books", async (req, res) => {
     const books = await Book.find({});
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < books.length; i++) {
         console.log(books[i].title);
     }
     res.json(books);
