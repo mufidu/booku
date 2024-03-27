@@ -46,7 +46,7 @@ app.get("/books/:id", async (req, res) => {
 });
 
 // Update a book by id
-app.put("/books/:id", async (req, res) => {
+app.put(/books/: id, async (req, res) => {
     const { id } = req.params;
     const { title, author, year, category, cover } = req.body;
 
