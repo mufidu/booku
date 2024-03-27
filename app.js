@@ -19,19 +19,10 @@ app.use(morgan("dev"));
 
 const categories = Book.schema.path("category").enumValues;
 
-// Create a function to console.log the request method and path
-const logRequest = (req, res, next) => {
-    console.log(`${req.method} request to ${req.path}`);
-    next();
-};
+const invalidJson = '{ "name": "John", }'; // trailing comma is not allowed in JSON
+const parsedJson = JSON.parse(invalidJson);
 
-app.use(logRequest);
-
-const printBooks = (books) => {
-    books.forEach((book) => {
-        console.log(book.title);
-    });
-};
+console.log(parsedJson);
 
 app.get("/", (req, res) => {
     res.send("Booku API!");
@@ -40,7 +31,6 @@ app.get("/", (req, res) => {
 // Get all books
 app.get("/books", async (req, res) => {
     const books = await Book.find({});
-    printBooks(books);
     res.json(books);
 });
 
