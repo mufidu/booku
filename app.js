@@ -7,7 +7,7 @@ const app = express();
 const methodOverride = require("method-override");
 const Book = require("./models/book");
 const morgan = require("morgan");
-const nonExistentModule = require("non-existent-module");
+
 
 require("./db");
 
