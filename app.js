@@ -18,8 +18,15 @@ app.use(morgan("dev"));
 
 const categories = Book.schema.path("category").enumValues;
 
+// Create a function to console.log the request method and path
+const logRequest = (req, res, next) => {
+    console.log(`${req.method} request to ${req.path}`);
+    next();
+};
+
 app.get("/", (req, res) => {
     res.send("Booku API!");
+    logReq(req, res);
 });
 
 // Get all books
