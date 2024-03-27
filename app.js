@@ -26,7 +26,7 @@ const logRequest = (req, res, next) => {
 
 app.get("/", (req, res) => {
     res.send("Booku API!");
-    logReq(req, res);
+    logRequest(req, res);
 });
 
 // Get all books
