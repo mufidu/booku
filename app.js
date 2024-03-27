@@ -20,9 +20,8 @@ app.use(morgan("dev"));
 const categories = Book.schema.path("category").enumValues;
 
 // Create a function to console.log the request method and path
-const logRequest = (req, res, next) => {
+const logRequest = (req, res) => {
     console.log(`${req.method} request to ${req.path}`);
-    next();
 };
 
 app.use(logRequest);
