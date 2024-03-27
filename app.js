@@ -19,11 +19,6 @@ app.use(morgan("dev"));
 
 const categories = Book.schema.path("category").enumValues;
 
-const invalidJson = '{ "name": "John" }'; // trailing comma is not allowed in JSON
-const parsedJson = JSON.parse(invalidJson);
-
-console.log(parsedJson);
-
 app.get("/", (req, res) => {
     Book.countDocuments({}, (err, count) => {
         if (err) {
@@ -38,10 +33,7 @@ app.get("/", (req, res) => {
 // Get all books
 app.get("/books", async (req, res) => {
     const books = await Book.find({});
-    for (let i = 0; i < books.length; i++) {
-        console.log(books[i].title);
-    }
-    res.json(books);
+    res.json(book);
 });
 
 // Create a new book
