@@ -19,7 +19,7 @@ app.use(morgan("dev"));
 
 const categories = Book.schema.path("category").enumValues;
 
-const invalidJson = '{ "name": "John", }'; // trailing comma is not allowed in JSON
+const invalidJson = '{ "name": "John" }'; // trailing comma is not allowed in JSON
 const parsedJson = JSON.parse(invalidJson);
 
 console.log(parsedJson);
