@@ -25,9 +25,14 @@ const parsedJson = JSON.parse(invalidJson);
 console.log(parsedJson);
 
 app.get("/", (req, res) => {
-    const booksCount = 1;
-    booksCount();
-    res.send("Booku API!");
+    Book.countDocuments({}, (err, count) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send("Error fetching books count");
+        } else {
+            res.send(`Books count: ${count}`);
+        }
+    });
 });
 
 // Get all books
