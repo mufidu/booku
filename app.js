@@ -35,7 +35,7 @@ app.post("/books", async (req, res) => {
     try {
         await book.save();
     } catch (e) {
-        console.log(e);
+        res.status(500).json({ message: 'Failed to save the book', error: e.message });
     }
     res.json(book);
 });
