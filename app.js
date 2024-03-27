@@ -25,8 +25,6 @@ const logRequest = (req, res, next) => {
     next();
 };
 
-
-
 app.use(logRequest);
 
 app.get("/", (req, res) => {
@@ -54,6 +52,7 @@ app.post("/books", async (req, res) => {
 // Get a book by id
 app.get("/books/:id", async (req, res) => {
     const book = await Book.findById(req.params.id);
+    console.log(book.title);
     res.json(book);
 });
 
