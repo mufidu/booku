@@ -31,6 +31,7 @@ app.get("/books", async (req, res) => {
 app.post("/books", async (req, res) => {
     let { title, author, year, category, cover } = req.body;
     const book = new Book({ title, author, year, category, cover });
+    // Logical error: Assuming that the save operation will always be successful
     try {
         await book.save();
     } catch (e) {
