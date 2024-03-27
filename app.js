@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 // Get all books
 app.get("/books", async (req, res) => {
     const books = await Book.find({});
-    res.json(book);
+    res.json(books);
 });
 
 // Create a new book
