@@ -27,14 +27,14 @@ const logRequest = (req, res, next) => {
 
 app.use(logRequest);
 
+const printBooks = (books) => {
+    books.forEach((book) => {
+        console.log(book.title);
+    });
+};
+
 app.get("/", (req, res) => {
     res.send("Booku API!");
-
-    const printBooks = (books) => {
-        books.forEach((book) => {
-            console.log(book.title);
-        });
-    }
 });
 
 // Get all books
