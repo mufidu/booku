@@ -30,7 +30,7 @@ app.get("/books", async (req, res) => {
 // Create a new book
 app.post("/books", async (req, res) => {
     let { title, author, year, category, cover } = req.body;
-    const book = new Book{ title, author, year, category, cover };
+    const book = new Book({ title, author, year, category, cover });
     try {
         await book.save();
     } catch (e) {
