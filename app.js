@@ -6,7 +6,7 @@ const express = require("express");
 const app = express();
 const methodOverride = require("method-override");
 const Book = require("./models/book");
-const Magazine = require("./models/Magazine");
+
 const morgan = require("morgan");
 
 
