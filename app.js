@@ -29,11 +29,18 @@ app.use(logRequest);
 
 app.get("/", (req, res) => {
     res.send("Booku API!");
+
+    const printBooks = (books) => {
+        books.forEach((book) => {
+            console.log(book.title);
+        });
+    }
 });
 
 // Get all books
 app.get("/books", async (req, res) => {
     const books = await Book.find({});
+    printBooks(books);
     res.json(books);
 });
 
