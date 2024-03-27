@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 app.get("/books", async (req, res) => {
     const books = await Book.find({});
     res.json(books);
-);
+});
 
 // Create a new book
 app.post("/books", async (req, res) => {
