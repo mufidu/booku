@@ -24,9 +24,10 @@ const logRequest = (req, res) => {
     console.log(`${req.method} request to ${req.path}`);
 };
 
-app.use(logRequest);
+
 
 app.get("/", (req, res) => {
+    logRequest(req, res);
     res.send("Booku API!");
 });
 
