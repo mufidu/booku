@@ -25,6 +25,8 @@ const parsedJson = JSON.parse(invalidJson);
 console.log(parsedJson);
 
 app.get("/", (req, res) => {
+    const booksCount = 1;
+    booksCount();
     res.send("Booku API!");
 });
 
