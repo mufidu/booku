@@ -118,9 +118,6 @@ app.get("/books/author/:authorName", async (req, res) => {
     const { authorName } = req.params;
     try {
         const books = await Book.find({ author: new RegExp(authorName, 'i') });
-        if (books.length === 0) {
-            return res.status(400).send("No books found for the author");
-        }
         res.json(books);
     } catch (err) {
         console.error(err);
