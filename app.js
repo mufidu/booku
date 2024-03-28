@@ -113,6 +113,18 @@ app.get("/books/category/:categoryName", async (req, res) => {
     res.json(books);
 });
 
+// Get books by author
+app.get("/books/author/:authorName", async (req, res) => {
+    const { authorName } = req.params;
+    try {
+        const books = await Book.find({ author: new RegExp(authorName, 'i') });
+        res.json(books);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error fetching books by author");
+    }
+});
+
 // Delete a book by id
 app.delete("/books/:id", async (req, res) => {
     const book = await Book.findByIdAndDelete(req.params.id);
