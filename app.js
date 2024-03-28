@@ -30,10 +30,24 @@ app.get("/", (req, res) => {
     });
 });
 
-// Get all books
+// Get all books with optional search
 app.get("/books", async (req, res) => {
-    const books = await Book.find({});
-    res.json(books);
+    let query = {};
+    if (req.query.title) {
+        query.title = new RegExp(req.query.title, 'i');
+    }
+    if (req.query.author) {
+        query.author = new RegExp(req.query.author, 'i');
+    }
+    if (req.query.category) {
+        query.category = req.query.category;
+    }
+    Book.find(query).then(books => {
+        res.json(books);
+    }).catch(err => {
+        console.error(err);
+        res.status(500).send("Error fetching books");
+    });
 });
 
 // Create a new book
