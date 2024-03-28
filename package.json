@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/mufidu/simplewebs#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "express-session": "^1.17.2",
     "eta": "^1.12.3",
     "express": "^4.17.2",
     "method-override": "^3.0.0",

@@ -8,6 +8,9 @@ const methodOverride = require("method-override");
 const Book = require("./models/book");
 
 const morgan = require("morgan");
+const session = require('express-session');
+const userRoutes = require('./routes/user.routes.js');
+const authenticateToken = require('./middleware/auth.middleware.js');
 
 
 require("./db");
@@ -16,6 +19,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(morgan("dev"));
+
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? false : true }
+}));
+
+app.use('/user', userRoutes);
+
+// Apply authentication middleware to protect routes
+app.use('/books', authenticateToken);
 
 const categories = Book.schema.path("category").enumValues;
 
