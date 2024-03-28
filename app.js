@@ -8,6 +8,7 @@ const methodOverride = require("method-override");
 const Book = require("./models/book");
 
 const morgan = require("morgan");
+const authRoutes = require("./routes/authRoutes");
 
 
 require("./db");
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(morgan("dev"));
+app.use("/auth", authRoutes);
 
 const categories = Book.schema.path("category").enumValues;
 
