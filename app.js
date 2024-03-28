@@ -8,17 +8,12 @@ const methodOverride = require("method-override");
 const Book = require("./models/book");
 
 const morgan = require("morgan");
-const booksRoutes = require('./routes/books');
-
-
 require("./db");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(morgan("dev"));
-app.use('/books', booksRoutes);
-
 const categories = Book.schema.path("category").enumValues;
 
 app.get("/", (req, res) => {
@@ -121,6 +116,16 @@ app.delete("/books/:id", async (req, res) => {
     const bookTitle = book.title;
 
     res.json(`${bookTitle} deleted`);
+});
+
+// Get books by author
+app.get('/books/by-author/:authorName', async (req, res) => {
+    try {
+        const books = await Book.find({ author: req.params.authorName });
+        res.json(books);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching books by author", error: err });
+    }
 });
 
 const port = process.env.PORT || 8080;
