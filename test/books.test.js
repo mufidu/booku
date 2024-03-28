@@ -11,6 +11,9 @@ describe('GET /books/category/:categoryName', () => {
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('array');
+        res.body.forEach(book => {
+          expect(book.category).to.equal('Fiction');
+        });
         done();
       });
   });
