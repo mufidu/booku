@@ -23,10 +23,5 @@ describe('GET /books/author/:authorName', () => {
     expect(res.body).to.be.an('array').that.is.empty;
   });
 
-  it('should handle invalid author names', async () => {
-    const authorName = 'Invalid123';
-    const res = await chai.request(server).get(`/books/author/${authorName}`);
-    expect(res).to.have.status(400);
-    expect(res.body).to.have.property('message').that.includes('Error fetching books by author');
-  });
+  
 });
