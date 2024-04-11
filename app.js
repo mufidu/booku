@@ -27,8 +27,8 @@ app.use(session({
   cookie: { secure: !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? false : true }
 }));
 
-app.use('/user', userRoutes);
 const bookRoutes = require('./routes/book.routes.js');
+app.use('/user', userRoutes);
 app.use('/books', bookRoutes);
 
 // Apply authentication middleware to protect routes
@@ -54,48 +54,18 @@ app.get("/", (req, res) => {
 
 
 // Get a book by id
-app.get("/books/:id", async (req, res) => {
-    const book = await Book.findById(req.params.id);
-    if (!book) {
-        return res.status(404).json({ message: 'Book not found' });
-    }
-    console.log(book.title);
-    res.json(book);
-});
 
 // Update a book by id
 
 
 // Delete a book by id
-app.delete("/books/:id", async (req, res) => {
-    const book = await Book.findByIdAndDelete(req.params.id);
-    const bookTitle = book.title;
-
-    res.json(`${bookTitle} deleted`);
-});
 
 // Get books by category
 
 
 // Get books by author
-app.get("/books/author/:authorName", async (req, res) => {
-    const { authorName } = req.params;
-    try {
-        const books = await Book.find({ author: new RegExp(authorName, 'i') });
-        res.json(books);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Error fetching books by author");
-    }
-});
 
 // Delete a book by id
-app.delete("/books/:id", async (req, res) => {
-    const book = await Book.findByIdAndDelete(req.params.id);
-    const bookTitle = book.title;
-
-    res.json(`${bookTitle} deleted`);
-});
 
 const port = process.env.PORT || 8080;
 
