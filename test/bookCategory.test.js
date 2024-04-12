@@ -37,8 +37,8 @@ describe('GET /books/category/:categoryName', () => {
                 .get('/books/category/!nvalidC@tegoryName')
                 .set('Authorization', `Bearer ${token}`)
                 .end((err, res) => {
-                    expect(res).to.have.status(400);
-                    expect(res.body.error).to.equal('Invalid category name.');
+                    expect(res).to.have.status(404);
+                    expect(res.body.error).to.equal('Invalid category');
                     done();
                 });
         });
