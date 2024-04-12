@@ -27,14 +27,15 @@ describe('GET /books/author/:authorName', () => {
       expect(book.author).to.equal(authorName);
     });
 
+  });
+
   it('should handle invalid author names gracefully', async () => {
     const invalidAuthorName = '@!#Invalid123';
     const res = await chai.request(server).get(`/books/author/${invalidAuthorName}`).set('Authorization', `Bearer ${token}`);
-    expect(res).to.have.status(200).or.have.status(400);
+    expect(res).to.have.status(404);
     if (res.status === 200) {
       expect(res.body).to.be.an('array').that.is.empty;
     }
-  });
   });
 
   it('should return an empty array for a non-existing author', async () => {
