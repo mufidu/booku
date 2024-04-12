@@ -32,7 +32,7 @@ app.use('/user', userRoutes);
 // Apply authentication middleware to protect routes
 
 
-const categories = Book.schema.path("category").enumValues;
+
 
 app.get("/", (req, res) => {
     Book.countDocuments({}, (err, count) => {
