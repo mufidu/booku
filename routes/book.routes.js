@@ -68,4 +68,38 @@ router.delete("/:id", async (req, res) => {
     res.json(`${bookTitle} deleted`);
 });
 
+// Get books by category
+router.get("/category/:categoryName", async (req, res) => {
+    const { categoryName } = req.params;
+    const books = await Book.find({ category: categoryName });
+
+    // If string is invalid (contains non-alphabetic characters), return 404
+    if (!/^[a-zA-Z]+$/.test(categoryName)) {
+        return res.status(404).send("Invalid category");
+    }
+
+    if (books.length === 0) {
+        // Return empty array if no books found
+        return res.json([]);
+    } else {
+        res.json(books);
+    }
+});
+
+// Get books by author
+router.get("/author/:authorName", async (req, res) => {
+    const { authorName } = req.params;
+    const books = await Book.find({ author: new RegExp(authorName, 'i') });
+
+    if (!/^[a-zA-Z\s]+$/.test(authorName)) {
+        return res.status(404).send("Invalid author");
+    }
+
+    if (books.length === 0) {
+        return res.json([]);
+    } else {
+        res.json(books);
+    }
+});
+
 module.exports = router;

@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 
 describe('GET /books/author/:authorName', () => {
   it('should retrieve books by an existing author', async () => {
-    const authorName = 'John Doe';
+    const authorName = 'Tere Liye';
     const res = await chai.request(server).get(`/books/author/${authorName}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('array');
@@ -23,5 +23,5 @@ describe('GET /books/author/:authorName', () => {
     expect(res.body).to.be.an('array').that.is.empty;
   });
 
-  
+
 });

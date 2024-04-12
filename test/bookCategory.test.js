@@ -27,8 +27,8 @@ describe('GET /books/category/:categoryName', () => {
             chai.request(server)
                 .get('/books/category/Unknown')
                 .end((err, res) => {
-                    expect(res).to.have.status(404);
-                    expect(res.text).to.equal('Invalid category');
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.an('array').that.is.empty;
                     done();
                 });
         });

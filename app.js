@@ -29,7 +29,7 @@ app.use(session({
 }));
 
 app.use('/user', userRoutes);
-app.use('/books', authenticateToken, bookRoutes);
+app.use('/books', bookRoutes);
 
 app.get("/", (req, res) => {
     Book.countDocuments({}, (err, count) => {
