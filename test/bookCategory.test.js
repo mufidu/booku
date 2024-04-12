@@ -30,6 +30,19 @@ describe('GET /books/category/:categoryName', () => {
                     res.body.forEach(book => {
                         expect(book.category).to.equal('Fantasy');
                     });
+
+    describe('Handling invalid category names', () => {
+        it('should return a 400 status code with an appropriate error message for an invalid category name', done => {
+            chai.request(server)
+                .get('/books/category/!nvalidC@tegoryName')
+                .set('Authorization', `Bearer ${token}`)
+                .end((err, res) => {
+                    expect(res).to.have.status(400);
+                    expect(res.body.error).to.equal('Invalid category name.');
+                    done();
+                });
+        });
+    });
                     done();
                 });
         });
