@@ -40,8 +40,6 @@ describe('GET /books/author/:authorName', () => {
 
   });
 
-});
-
 it('should handle invalid author names gracefully', async () => {
   const invalidAuthorName = '@!#Invalid123';
   const res = await chai.request(server).get(`/books/author/${invalidAuthorName}`).set('Authorization', `Bearer ${token}`);
