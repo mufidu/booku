@@ -37,7 +37,6 @@ describe('GET /books/author/:authorName', () => {
         expect(book).to.not.have.any.keys('id', '_v');
       });
     });
-
   });
 
 it('should handle invalid author names gracefully', async () => {
