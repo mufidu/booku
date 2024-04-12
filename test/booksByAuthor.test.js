@@ -38,7 +38,7 @@ describe('GET /books/author/:authorName', () => {
     });
   });
 
-  });
+});
 
   it('should handle invalid author names gracefully', async () => {
     const invalidAuthorName = '@!#Invalid123';
