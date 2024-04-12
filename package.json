@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start-dev": "cross-env NODE_ENV=development nodemon -e js,eta,css app.js",
+    "dev": "cross-env NODE_ENV=development nodemon -e js,eta,css app.js",
     "start": "node app.js",
     "build": "npm run build:sass",
     "test": "mocha --timeout 20000 --exit"
