@@ -6,6 +6,16 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('GET /books/category/:categoryName', () => {
+    let token;
+    before(done => {
+        chai.request(server)
+            .post('/user/login')
+            .send({email: 'mufid.to@gmail.com', password: 'password'})
+            .end((err, res) => {
+                token = res.body.token;
+                done();
+            });
+    });
     describe('Successfully retrieving books by category', () => {
         it('should return all books for a valid category', done => {
             chai.request(server)
@@ -26,6 +36,7 @@ describe('GET /books/category/:categoryName', () => {
         it('should return a 404 status code with an appropriate error message', done => {
             chai.request(server)
                 .get('/books/category/Unknown')
+                .set('Authorization', `Bearer ${token}`)
                 .end((err, res) => {
                     expect(res).to.have.status(404);
                     expect(res.text).to.equal('Invalid category');
@@ -38,6 +49,7 @@ describe('GET /books/category/:categoryName', () => {
         it('should return books with the correct structure for a valid category', done => {
             chai.request(server)
                 .get('/books/category/Science')
+                .set('Authorization', `Bearer ${token}`)
                 .end((err, res) => {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.an('array');
