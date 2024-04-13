@@ -12,6 +12,7 @@ const session = require('express-session');
 const authRoutes = require('./routes/auth.routes.js');
 const bookRoutes = require('./routes/book.routes.js');
 const authenticateToken = require('./middleware/auth.middleware.js');
+const userRoutes = require('./routes/user.routes.js');
 
 
 require("./db");
@@ -28,7 +29,8 @@ app.use(session({
     cookie: { secure: !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? false : true }
 }));
 
-app.use('/user', authRoutes);
+app.use('/user', authenticateToken);
+app.use('/user', userRoutes);
 app.use('/books', bookRoutes);
 
 app.get("/", (req, res) => {
