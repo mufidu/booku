@@ -9,7 +9,7 @@ const Book = require("./models/book");
 
 const morgan = require("morgan");
 const session = require('express-session');
-const userRoutes = require('./routes/user.routes.js');
+const authRoutes = require('./routes/auth.routes.js');
 const bookRoutes = require('./routes/book.routes.js');
 const authenticateToken = require('./middleware/auth.middleware.js');
 
@@ -28,7 +28,7 @@ app.use(session({
     cookie: { secure: !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? false : true }
 }));
 
-app.use('/user', userRoutes);
+app.use('/user', authRoutes);
 app.use('/books', bookRoutes);
 
 app.get("/", (req, res) => {
