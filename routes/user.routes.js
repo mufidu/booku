@@ -51,7 +51,8 @@ router.get('/profile', async (req, res) => {
 });
 
 // Update the authenticated user's profile
-router.put('/profile', async (req, res) => {
+router.put('/profile', authenticateToken, async (req, res) => {
+  const { password, ...update } = req.body; // Ignore password field from update
   try {
     const token = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
@@ -64,6 +65,8 @@ router.put('/profile', async (req, res) => {
   } catch (error) {
     if (error.code === 11000) {
       res.status(400).send('Email already in use');
+    } else if (error.code === 'SomeErrorCodeForUsernameDuplication') { // Replace 'SomeErrorCodeForUsernameDuplication' with the actual error code
+      res.status(400).send('Username already in use');
     } else {
       res.status(401).send('Invalid token');
     }
