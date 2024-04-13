@@ -30,6 +30,8 @@ app.use(session({
 
 app.use('/user', userRoutes);
 app.use('/books', bookRoutes);
+const profileRoutes = require('./routes/profile.routes.js');
+app.use('/profile', profileRoutes);
 
 app.get("/", (req, res) => {
     Book.countDocuments({}, (err, count) => {
