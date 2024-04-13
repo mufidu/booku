@@ -11,6 +11,7 @@ const morgan = require("morgan");
 const session = require('express-session');
 const authRoutes = require('./routes/auth.routes.js');
 const bookRoutes = require('./routes/book.routes.js');
+const userRoutes = require('./routes/user.routes.js');
 const authenticateToken = require('./middleware/auth.middleware.js');
 
 
@@ -30,6 +31,7 @@ app.use(session({
 
 app.use('/user', authRoutes);
 app.use('/books', bookRoutes);
+app.use('/user', userRoutes);
 
 app.get("/", (req, res) => {
     Book.countDocuments({}, (err, count) => {
