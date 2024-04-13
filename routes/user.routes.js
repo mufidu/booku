@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model.js');
+const authenticateToken = require('../middleware/auth.middleware.js');
 
 const router = express.Router();
 
@@ -31,6 +32,31 @@ router.post('/login', async (req, res) => {
     res.status(200).send({ jwt: token });
   } else {
     res.status(401).send('Invalid credentials');
+  }
+});
+
+router.put('/profile', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, { new: true });
+    res.status(200).send({ username: updatedUser.username, email: updatedUser.email });
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+});
+
+router.get('/profile', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    res.status(200).send({ username: user.username, email: user.email });
+  } catch (error) {
+    res.status(500).send('Server error');
   }
 });
 
