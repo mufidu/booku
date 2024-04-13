@@ -5,6 +5,7 @@ const User = require('../models/user.model.js');
 
 const router = express.Router();
 
+// Endpoint to create a user profile
 router.post('/register', async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -31,6 +32,41 @@ router.post('/login', async (req, res) => {
     res.status(200).send({ jwt: token });
   } else {
     res.status(401).send('Invalid credentials');
+  }
+});
+
+// Retrieve the authenticated user's profile
+router.get('/profile', async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const user = await User.findById(decoded.id, '-password');
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    res.status(200).json({ username: user.username, email: user.email });
+  } catch (error) {
+    res.status(401).send('Invalid token');
+  }
+});
+
+// Update the authenticated user's profile
+router.put('/profile', async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const update = { username: req.body.username, email: req.body.email };
+    const updatedUser = await User.findByIdAndUpdate(decoded.id, update, { new: true, runValidators: true });
+    if (!updatedUser) {
+      return res.status(404).send('User not found');
+    }
+    res.status(200).send('Profile updated successfully');
+  } catch (error) {
+    if (error.code === 11000) {
+      res.status(400).send('Email already in use');
+    } else {
+      res.status(401).send('Invalid token');
+    }
   }
 });
 
