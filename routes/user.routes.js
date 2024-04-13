@@ -34,4 +34,47 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Middleware for authentication
+const authenticate = require('../middleware/authenticate');
+
+// PUT endpoint for editing user's profile
+router.put('/profile', authenticate, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const updatedUser = await User.findByIdAndUpdate(req.user.id, {
+      username: req.body.username,
+      email: req.body.email,
+      password: hashedPassword
+    }, { new: true });
+    res.status(200).send({
+      username: updatedUser.username,
+      email: updatedUser.email,
+      password: updatedUser.password
+    });
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+});
+
+// GET endpoint for retrieving user's profile
+router.get('/profile', authenticate, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    res.status(200).send({
+      username: user.username,
+      email: user.email,
+      password: user.password
+    });
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+});
+
 module.exports = router;
