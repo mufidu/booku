@@ -28,7 +28,7 @@ app.use(session({
     cookie: { secure: !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? false : true }
 }));
 
-app.use('/user', userRoutes);
+app.use('/user', authenticateToken, userRoutes);
 app.use('/books', bookRoutes);
 
 app.get("/", (req, res) => {
