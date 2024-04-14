@@ -30,8 +30,9 @@ describe("User Operations", () => {
 
   it("should delete the user with authentication", async () => {
     const res = await chai.request(app)
-      .delete(`/users/${userId}`)
-      .set("Authorization", `Bearer ${token}`);
+      .delete('/users')
+      .set("Authorization", `Bearer ${token}`)
+      .send({ id: userId });
 
     expect(res).to.have.status(200);
     expect(res.body).to.equal('\"User deleted successfully\"');
