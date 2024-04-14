@@ -19,6 +19,11 @@ router.get('/', authenticateToken, async (req, res) => {
 
 router.put('/', authenticateToken, async (req, res) => {
   const { username, email, password } = req.body;
+  // Validate email format
+  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  if (email && !emailRegex.test(email)) {
+    return res.status(400).send('Invalid email format');
+  }
   const updateData = {};
   if (username) updateData.username = username;
   if (email) updateData.email = email;
