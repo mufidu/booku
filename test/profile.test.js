@@ -36,9 +36,9 @@ describe('Profile Routes', function () {
       const res = await chai.request(app)
         .put('/profile')
         .set('Authorization', `Bearer ${token}`)
-        .send({ username: 'NewUsername', email: 'newemail@example.com' });
+        .send({ username: 'testUpdate', email: 'testUpdate@example.com' });
       expect(res).to.have.status(200);
-      expect(res.body).to.include({ username: 'NewUsername', email: 'newemail@example.com' });
+      expect(res.body).to.include({ username: 'testUpdate', email: 'testUpdate@example.com' });
 
       // Change back to the original data
       await chai.request(app)

@@ -7,13 +7,13 @@ chai.use(chaiHttp);
 let token;
 
 before(done => {
-    chai.request(server)
-        .post('/user/login')
-        .send({email: 'mufid.to@gmail.com', password: 'password'})
-        .end((err, res) => {
-            token = res.body.token;
-            done();
-        });
+  chai.request(server)
+    .post('/auth/login')
+    .send({ email: 'mufid.to@gmail.com', password: 'password' })
+    .end((err, res) => {
+      token = res.body.jwt;
+      done();
+    });
 });
 
 describe('GET /books search functionality', () => {

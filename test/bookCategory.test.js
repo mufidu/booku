@@ -9,10 +9,10 @@ let token;
 
 before(done => {
     chai.request(server)
-        .post('/user/login')
-        .send({email: 'mufid.to@gmail.com', password: 'password'})
+        .post('/auth/login')
+        .send({ email: 'mufid.to@gmail.com', password: 'password' })
         .end((err, res) => {
-            token = res.body.token;
+            token = res.body.jwt;
             done();
         });
 });
@@ -31,17 +31,17 @@ describe('GET /books/category/:categoryName', () => {
                         expect(book.category).to.equal('Fantasy');
                     });
 
-    describe('Handling invalid category names', () => {
-        it('should return a 400 status code with an appropriate error message for an invalid category name', done => {
-            chai.request(server)
-                .get('/books/category/!nvalidC@tegoryName')
-                .set('Authorization', `Bearer ${token}`)
-                .end((err, res) => {
-                    expect(res).to.have.status(404);
-                    done();
-                });
-        });
-    });
+                    describe('Handling invalid category names', () => {
+                        it('should return a 400 status code with an appropriate error message for an invalid category name', done => {
+                            chai.request(server)
+                                .get('/books/category/!nvalidC@tegoryName')
+                                .set('Authorization', `Bearer ${token}`)
+                                .end((err, res) => {
+                                    expect(res).to.have.status(404);
+                                    done();
+                                });
+                        });
+                    });
                     done();
                 });
         });

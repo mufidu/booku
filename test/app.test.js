@@ -9,21 +9,21 @@ const { expect } = chai;
 let token;
 
 before(async () => {
-  try {
-    const res = await chai.request(app)
-      .post("/auth/login")
-      .send({email: "mufid.to@gmail.com", password: "password"});
-    token = res.body.jwt;
-  } catch (error) {
-    console.error("Login failed", error);
-    throw error;
-  }
+    try {
+        const res = await chai.request(app)
+            .post("/auth/login")
+            .send({ email: "mufid.to@gmail.com", password: "password" });
+        token = res.body.jwt;
+    } catch (error) {
+        console.error("Login failed", error);
+        throw error;
+    }
 });
 
 describe("Book API", () => {
     // Test for GET route "/books"
     it("should get all books on /books GET", async () => {
-        const res = await chai.request(app).get("/books");
+        const res = await chai.request(app).get("/books").set("Authorization", `Bearer ${token}`);
         expect(res).to.have.status(200);
         expect(res.body).to.be.a("array");
     });
@@ -53,7 +53,7 @@ describe("Book API", () => {
             cover: "Test Cover",
         });
         await book.save();
-        const res = await chai.request(app).get(`/books/${book.id}`);
+        const res = await chai.request(app).get(`/books/${book.id}`).set("Authorization", `Bearer ${token}`);
         expect(res).to.have.status(200);
         expect(res.body).to.be.a("object");
         expect(res.body).to.have.property("title").eql(book.title);

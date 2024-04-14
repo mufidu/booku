@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon -e js,eta,css app.js",
     "start": "node app.js",
-    "build": "npm run build:sass",
     "test": "mocha --timeout 100000 --exit"
   },
   "repository": {

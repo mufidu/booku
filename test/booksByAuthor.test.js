@@ -9,10 +9,10 @@ let token;
 
 before(done => {
   chai.request(server)
-    .post('/user/login')
+    .post('/auth/login')
     .send({ email: 'mufid.to@gmail.com', password: 'password' })
     .end((err, res) => {
-      token = res.body.token;
+      token = res.body.jwt;
       done();
     });
 });

@@ -1,11 +1,10 @@
 const express = require('express');
 const User = require('../models/user.model.js');
-const authenticateToken = require('../middleware/auth.middleware.js');
 const bcrypt = require('bcrypt');
 
 const router = express.Router();
 
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const user = await User.findById(req.user._id, '-password');
     if (!user) {
@@ -17,7 +16,7 @@ router.get('/', authenticateToken, async (req, res) => {
   }
 });
 
-router.put('/', authenticateToken, async (req, res) => {
+router.put('/', async (req, res) => {
   const { username, email, password } = req.body;
   // Validate email format
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
