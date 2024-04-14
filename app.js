@@ -31,7 +31,7 @@ app.use(session({
 }));
 
 app.use('/auth', authRoutes);
-app.use('/books', bookRoutes);
+app.use('/books', authenticateToken, bookRoutes);
 app.use('/users', authenticateToken, userRoutes);
 app.use('/profile', authenticateToken, profileRoutes);
 
