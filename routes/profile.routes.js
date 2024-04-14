@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/user.model.js');
 const bcrypt = require('bcrypt');
+const { hashPassword } = require('../utils/passwordUtil.js');
 
 const router = express.Router();
 
@@ -27,7 +28,7 @@ router.put('/', async (req, res) => {
   if (username) updateData.username = username;
   if (email) updateData.email = email;
   if (password) {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hashPassword(password);
     updateData.password = hashedPassword;
   }
 

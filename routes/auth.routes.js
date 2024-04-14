@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const { hashPassword } = require('../utils/passwordUtil.js');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model.js');
 
@@ -7,7 +8,7 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const hashedPassword = await hashPassword(req.body.password);
     const user = new User({
       username: req.body.username,
       email: req.body.email,
