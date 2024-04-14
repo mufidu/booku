@@ -14,7 +14,7 @@ router.post('/register', async (req, res) => {
       password: hashedPassword
     });
     const newUser = await user.save();
-    res.status(201).send({ userId: newUser._id });
+    res.status(201).json({ userId: newUser._id });
   } catch (error) {
     if (error.code === 11000) {
       res.status(400).send('Email already registered');

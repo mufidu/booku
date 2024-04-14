@@ -10,7 +10,7 @@ const authenticateToken = async (req, res, next) => {
     if (err) return res.sendStatus(403);
     try {
       const authenticatedUser = await User.findById(user.id);
-      if (!authenticatedUser) return res.sendStatus(404);
+      if (!authenticatedUser) return res.sendStatus(401);
       req.user = authenticatedUser;
       next();
     } catch (error) {

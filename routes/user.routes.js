@@ -3,7 +3,7 @@ const User = require('../models/user.model.js');
 
 const router = express.Router();
 
-router.delete('/:id', async (req, res) => {
+router.delete('/', async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.body.id);
     if (!deletedUser) {
