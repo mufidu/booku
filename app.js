@@ -13,6 +13,7 @@ const authRoutes = require('./routes/auth.routes.js');
 const bookRoutes = require('./routes/book.routes.js');
 const authenticateToken = require('./middleware/auth.middleware.js');
 const userRoutes = require('./routes/user.routes.js');
+const profileRoutes = require('./routes/profile.routes.js');
 
 
 require("./db");
@@ -32,6 +33,7 @@ app.use(session({
 app.use('/auth', authRoutes);
 app.use('/books', bookRoutes);
 app.use('/users', authenticateToken, userRoutes);
+app.use('/profile', authenticateToken, profileRoutes);
 
 app.get("/", (req, res) => {
     Book.countDocuments({}, (err, count) => {
