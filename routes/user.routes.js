@@ -4,6 +4,9 @@ const User = require('../models/user.model.js');
 const router = express.Router();
 
 router.delete('/', async (req, res) => {
+  if (!req.body.id) {
+    return res.status(400).send('ID is required');
+  }
   try {
     const deletedUser = await User.findByIdAndDelete(req.body.id);
     if (!deletedUser) {
