@@ -1,6 +1,7 @@
 const express = require('express');
 const authenticateToken = require('../middleware/auth.middleware');
 const User = require('../models/user.model');
+const bcrypt = require('bcrypt');
 
 const router = express.Router();
 
@@ -19,7 +20,9 @@ router.get('/profile', authenticateToken, async (req, res) => {
 router.put('/profile', authenticateToken, async (req, res) => {
   const { username, email, password } = req.body;
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.user._id, { username, email, password }, { new: true, runValidators: true });
+    const salt = await bcrypt.genSalt(10);
+const hashedPassword = await bcrypt.hash(password, salt);
+const updatedUser = await User.findByIdAndUpdate(req.user._id, { username, email, password: hashedPassword }, { new: true, runValidators: true });
     if (!updatedUser) {
       return res.status(404).send('User not found');
     }
