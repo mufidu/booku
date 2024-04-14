@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 const router = express.Router();
 
-router.get('/profile', authenticateToken, async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
   try {
     const user = await User.findById(req.user._id, 'username email password');
     if (!user) {
@@ -17,7 +17,7 @@ router.get('/profile', authenticateToken, async (req, res) => {
   }
 });
 
-router.put('/profile', authenticateToken, async (req, res) => {
+router.put('/', authenticateToken, async (req, res) => {
   const { username, email, password } = req.body;
   try {
     const salt = await bcrypt.genSalt(10);
