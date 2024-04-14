@@ -2,6 +2,7 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
 const Book = require("../models/book");
+require('dotenv').config();
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -12,7 +13,7 @@ before(async () => {
     try {
         const res = await chai.request(app)
             .post("/auth/login")
-            .send({ email: "mufid.to@gmail.com", password: "password" });
+            .send({ email: process.env.TEST_EMAIL, password: process.env.TEST_PASSWORD });
         token = res.body.jwt;
     } catch (error) {
         console.error("Login failed", error);
