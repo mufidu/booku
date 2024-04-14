@@ -1,3 +1,4 @@
+require('dotenv').config();
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
@@ -13,8 +14,8 @@ describe("User Operations", () => {
       .post("/auth/register")
       .send({
         username: "test_delete",
-        email: "test_delete@example.com",
-        password: "password123"
+        email: process.env.TEST_EMAIL,
+        password: process.env.TEST_PASSWORD
       });
     userId = res.body.userId;
 
@@ -22,8 +23,8 @@ describe("User Operations", () => {
     res = await chai.request(app)
       .post("/auth/login")
       .send({
-        email: "test_delete@example.com",
-        password: "password123"
+        email: process.env.DELETE_TEST_EMAIL,
+        password: process.env.DELETE_TEST_PASSWORD
       });
     token = res.body.jwt;
   });
