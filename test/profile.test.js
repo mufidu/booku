@@ -1,4 +1,5 @@
 const chai = require('chai');
+require("dotenv").config();
 const chaiHttp = require('chai-http');
 const app = require('../app');
 const expect = chai.expect;
