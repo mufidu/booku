@@ -2,6 +2,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../app');
 const expect = chai.expect;
+require('dotenv').config();
 
 chai.use(chaiHttp);
 
@@ -10,7 +11,7 @@ let token;
 before(done => {
     chai.request(server)
         .post('/auth/login')
-        .send({ email: 'mufid.to@gmail.com', password: 'password' })
+        .send({ email: process.env.TEST_EMAIL, password: process.env.TEST_PASSWORD })
         .end((err, res) => {
             token = res.body.jwt;
             done();

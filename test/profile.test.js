@@ -2,6 +2,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../app');
 const expect = chai.expect;
+require('dotenv').config();
 
 chai.use(chaiHttp);
 
@@ -11,7 +12,7 @@ describe('Profile Routes', function () {
   before(async function () {
     const loginResponse = await chai.request(app)
       .post('/auth/login')
-      .send({ email: 'mufid.to@gmail.com', password: 'password' });
+      .send({ email: process.env.TEST_EMAIL, password: process.env.TEST_PASSWORD });
     token = loginResponse.body.jwt;
   });
 

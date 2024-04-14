@@ -1,0 +1,16 @@
+
+## Creating the `.env` File
+If you don't already have a `.env` file at the root of your project, create one. This file should not be committed to your version control system.
+
+## Adding Test Credentials
+In your `.env` file, add the following lines:
+```
+TEST_EMAIL=your_test_account_email@example.com
+TEST_PASSWORD=your_test_account_password
+```
+Replace `your_test_account_email@example.com` and `your_test_account_password` with the credentials of the test account you wish to use for running automated tests.
+
+## Example `.env` Content
+```
+TEST_EMAIL=test@example.com
+TEST_PASSWORD=securepassword123
