@@ -16,6 +16,16 @@ describe("User Operations", () => {
         email: "test_delete@example.com",
         password: "password123"
       });
+
+  it("should return an error when no ID is provided for deletion", async () => {
+    const res = await chai.request(app)
+      .delete('/users')
+      .set("Authorization", `Bearer ${token}`)
+      .send({});
+
+    expect(res).to.have.status(400);
+    expect(res.body).to.equal('"No user ID provided"');
+  });
     userId = res.body.userId;
 
     // Login to obtain token
