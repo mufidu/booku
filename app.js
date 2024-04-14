@@ -33,7 +33,7 @@ app.use('/auth', authRoutes);
 app.use('/books', bookRoutes);
 app.use('/users', authenticateToken, userRoutes);
 const profileRoutes = require('./routes/profile.routes.js');
-app.use('/api/profile', authenticateToken, profileRoutes);
+app.use('/profile', authenticateToken, profileRoutes);
 
 app.get("/", (req, res) => {
     Book.countDocuments({}, (err, count) => {
