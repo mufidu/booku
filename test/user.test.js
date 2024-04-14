@@ -34,7 +34,7 @@ describe("User Operations", () => {
       .set("Authorization", `Bearer ${token}`);
 
     expect(res).to.have.status(200);
-    expect(res.body).to.equal('User deleted successfully');
+    expect(res.body).to.equal('\"User deleted successfully\"');
 
     // Verify user is deleted from the database
     const checkUser = await chai.request(app)
