@@ -1,7 +1,7 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
-const Book = require("../models/book");
+const Book = require("../models/book.model.js");
 require('dotenv').config();
 
 chai.use(chaiHttp);
