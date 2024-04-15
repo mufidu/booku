@@ -24,6 +24,8 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     if (error.code === 11000) {
       res.status(400).send('Email already registered');
+    } else if (error.name === 'ValidationError') {
+      res.status(400).send('User creation failed: Invalid data');
     } else {
       res.status(500).send('Server error');
     }
