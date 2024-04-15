@@ -12,6 +12,10 @@ const validateInput = (type, value) => {
     case 'password':
       const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
       return regexPassword.test(value);
+    // Validates that the category name contains only alphabetic characters.
+    case 'category':
+      const regexCategory = /^[a-zA-Z]+$/;
+      return regexCategory.test(value);
     // Placeholder for future validation types (e.g., phone number validation)
     // case 'phone':
     //   TODO: Implement phone number validation
