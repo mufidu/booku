@@ -14,4 +14,6 @@ const validateInput = (type, value) => {
   }
 };
 
+module.exports = validateInput;
+
 module.exports = { validateUsername, validateEmail, validatePassword };
