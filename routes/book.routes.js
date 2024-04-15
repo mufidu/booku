@@ -26,6 +26,9 @@ router.get("/", async (req, res) => {
 // Create a new book
 router.post("/", async (req, res) => {
     let { title, author, year, category, cover } = req.body;
+    if (!title || !author || !year || !category || !cover || !validateInput('year', year)) {
+        return res.status(400).json({ message: 'Missing or invalid required field' });
+    }
     const book = new Book({ title, author, year, category, cover });
     try {
         await book.save();
@@ -49,6 +52,9 @@ router.get("/:id", async (req, res) => {
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { title, author, year, category, cover } = req.body;
+    if (!title || !author || !year || !category || !cover || !validateInput('year', year)) {
+        return res.status(400).json({ message: 'Missing or invalid required field' });
+    }
 
     try {
         const book = await Book.findByIdAndUpdate(id,
