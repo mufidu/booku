@@ -20,6 +20,9 @@ router.post('/register', async (req, res) => {
       password: hashedPassword
     });
     const newUser = await user.save();
+    if (!newUser) {
+      return res.status(500).send('Failed to create user due to a database error.');
+    }
     res.status(201).json({ userId: newUser._id });
   } catch (error) {
     if (error.code === 11000) {
