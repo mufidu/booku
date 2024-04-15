@@ -75,12 +75,11 @@ router.delete("/:id", async (req, res) => {
 // Get books by category
 router.get("/category/:categoryName", async (req, res) => {
     const { categoryName } = req.params;
-    const books = await Book.find({ category: categoryName });
-
     // If string is invalid (contains non-alphabetic characters), return 404
-    if (!/^[a-zA-Z]+$/.test(categoryName)) {
+    if (!validateInput('category', categoryName)) {
         return res.status(404).send("Invalid category");
     }
+    const books = await Book.find({ category: categoryName });
 
     if (books.length === 0) {
         // Return empty array if no books found
