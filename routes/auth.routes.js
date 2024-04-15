@@ -4,7 +4,7 @@ const { hashPassword } = require('../utils/passwordUtil.js');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model.js');
 
-const { validateInput } = require('../utils/validateInput.js');
+const validateInput = require('../utils/validateInput');
 
 const router = express.Router();
 
