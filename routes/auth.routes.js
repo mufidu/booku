@@ -36,6 +36,7 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+  if (!validateInput('email', req.body.email)) return res.status(400).send('Invalid email');
   const user = await User.findOne({ email: req.body.email });
   if (user && await bcrypt.compare(req.body.password, user.password)) {
     const token = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '24h' });
