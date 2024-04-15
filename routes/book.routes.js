@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Book = require('../models/book.model.js');
-const validateInput = require('../utils/validateInput.js');
+const { validateInput } = require('../utils/validateInput.js');
 
 // Get all books with optional search
 router.get("/", async (req, res) => {
