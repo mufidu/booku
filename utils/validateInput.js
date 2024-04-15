@@ -16,6 +16,10 @@ const validateInput = (type, value) => {
     case 'category':
       const regexCategory = /^[a-zA-Z]+$/;
       return regexCategory.test(value);
+    // Validates that the author name contains only letters and spaces.
+    case 'authorName':
+      const regexAuthorName = /^[a-zA-Z\s]+$/;
+      return regexAuthorName.test(value);
     // Placeholder for future validation types (e.g., phone number validation)
     // case 'phone':
     //   TODO: Implement phone number validation
