@@ -49,15 +49,19 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { title, author, year, category, cover } = req.body;
 
-    const book = await Book.findByIdAndUpdate(id,
-        { title, author, year, category, cover },
-        { new: true },);
+    try {
+        const book = await Book.findByIdAndUpdate(id,
+            { title, author, year, category, cover },
+            { new: true });
 
-    if (!book) {
-        return res.status(404).send("Book not found");
+        if (!book) {
+            return res.status(404).send("Book not found");
+        }
+
+        res.json(book);
+    } catch (e) {
+        res.status(500).json({ message: 'Database operation failed', error: e.message });
     }
-
-    res.json(book);
 });
 
 // Delete a book by id
