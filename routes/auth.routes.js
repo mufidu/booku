@@ -27,7 +27,7 @@ router.post('/register', async (req, res) => {
     } else if (error.name === 'ValidationError') {
       res.status(400).send('User creation failed: Invalid data');
     } else {
-      res.status(500).send('Server error');
+      res.status(500).send('Database error: Unable to create user');
     }
   }
 });
