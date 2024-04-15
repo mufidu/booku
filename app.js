@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const app = express();
 const methodOverride = require("method-override");
-const Book = require("./models/book");
+const Book = require("./models/book.model.js");
 
 const morgan = require("morgan");
 const session = require('express-session');

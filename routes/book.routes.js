@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Book = require('../models/book');
+const Book = require('../models/book.model.js');
 
 // Get all books with optional search
 router.get("/", async (req, res) => {
