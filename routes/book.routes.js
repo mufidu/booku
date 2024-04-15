@@ -90,14 +90,14 @@ router.get("/category/:categoryName", async (req, res) => {
     }
 });
 
-// Get books by author
+// Get books by author with validation
 router.get("/author/:authorName", async (req, res) => {
     const { authorName } = req.params;
-    const books = await Book.find({ author: new RegExp(authorName, 'i') });
-
-    if (!/^[a-zA-Z\s]+$/.test(authorName)) {
-        return res.status(404).send("Invalid author");
+    // Validate authorName before querying the database
+    if (!validateInput('authorName', authorName)) {
+        return res.status(400).send("Invalid author name");
     }
+    const books = await Book.find({ author: new RegExp(authorName, 'i') });
 
     if (books.length === 0) {
         return res.json([]);
